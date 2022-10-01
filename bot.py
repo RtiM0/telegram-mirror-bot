@@ -109,7 +109,7 @@ async def get_stream(links: list, title: str, reddit_post: str, automod_id, cont
                         and vid_head.status_code == 200
                     ):
                         vid_size = int(vid_head.headers.get('content-length', 0))
-                        if vid_size < 10000:
+                        if vid_size > 10000:
                             logger.info(f"Found direct for {link} [size - {convert_size(vid_size)}]")
                             if (vid_size >= 14000000):
                                 logger.info(f"Compressing Video of size - {convert_size(vid_size)}")
