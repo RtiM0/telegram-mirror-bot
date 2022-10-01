@@ -109,29 +109,30 @@ async def get_stream(links: list, title: str, reddit_post: str, automod_id, cont
                         and vid_head.status_code == 200
                     ):
                         vid_size = int(vid_head.headers.get('content-length', 0))
-                        logger.info(f"Found direct for {link} [size - {convert_size(vid_size)}]")
-                        if (vid_size >= 14000000):
-                            logger.info(f"Compressing Video of size - {convert_size(vid_size)}")
-                            try:
-                                input_video = Video(vid_head.url)
-                                output_path = input_video.compress_video(12*1000)
-                                if output_path:
-                                    logger.info(f"Video compressed to size - {convert_size(output_path.stat().st_size)}")
-                                    await send_video(context, output_path.open("rb"), title, reddit_post, automod_id)
-                                    os.remove(output_path.resolve())
-                                    return True
-                            except Exception:
-                                pass
-                        else:
-                            try:
-                                await send_video(context, vid_head.url,title, reddit_post, automod_id)
-                                return True
-                            except BadRequest:
+                        if vid_size < 10000:
+                            logger.info(f"Found direct for {link} [size - {convert_size(vid_size)}]")
+                            if (vid_size >= 14000000):
+                                logger.info(f"Compressing Video of size - {convert_size(vid_size)}")
                                 try:
-                                    await send_video(context, get(vid_head.url).content,title, reddit_post, automod_id)
-                                    return True
+                                    input_video = Video(vid_head.url)
+                                    output_path = input_video.compress_video(12*1000)
+                                    if output_path:
+                                        logger.info(f"Video compressed to size - {convert_size(output_path.stat().st_size)}")
+                                        await send_video(context, output_path.open("rb"), title, reddit_post, automod_id)
+                                        os.remove(output_path.resolve())
+                                        return True
                                 except Exception:
                                     pass
+                            else:
+                                try:
+                                    await send_video(context, vid_head.url,title, reddit_post, automod_id)
+                                    return True
+                                except BadRequest:
+                                    try:
+                                        await send_video(context, get(vid_head.url).content,title, reddit_post, automod_id)
+                                        return True
+                                    except Exception:
+                                        pass
                 except Exception:
                     pass
         except Exception:
