@@ -6,13 +6,13 @@ from re import findall
 from string import Template
 
 import asyncpraw
+from dotenv import load_dotenv
 from fake_headers import Headers
 from requests import get, head
 from telegram.constants import ParseMode
 from telegram.error import BadRequest
 from telegram.ext import Application, Defaults, PicklePersistence
 from yt_dlp import YoutubeDL
-from dotenv import load_dotenv
 
 from logger import logger
 from video import Video

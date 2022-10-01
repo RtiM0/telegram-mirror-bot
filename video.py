@@ -2,9 +2,10 @@ import os
 from pathlib import Path
 from time import time
 from typing import Union
-from logger import logger
 
 import ffmpeg
+
+from logger import logger
 
 
 def current_milli_time():
