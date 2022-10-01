@@ -14,7 +14,12 @@ def current_milli_time():
 class Video:
     def __init__(self, video_path: str) -> None:
         self.video_path: str = video_path
-        self.probe: dict = ffmpeg.probe(self.video_path)
+        try:
+            self.probe: dict = ffmpeg.probe(self.video_path)
+        except ffmpeg.Error as err:
+            logger.error("ffmpeg stdout", err.stdout.decode())
+            logger.error("ffmpeg stderr", err.stderr.decode())
+            raise err
     
     @property
     def duration(self) -> float:
@@ -82,20 +87,17 @@ class Video:
 
             i = ffmpeg.input(video_full_path)
             if two_pass:
-                _, err = ffmpeg.output(i, os.devnull,
+                ffmpeg.output(i, os.devnull,
                             **{'c:v': 'libx264', 'b:v': video_bitrate, 'pass': 1, 'f': 'mp4'}
                             ).overwrite_output().run(quiet=True)
-                logger.error('ffmpeg stderr: %s', err.decode())
-                _, err = ffmpeg.output(i, file_name,
+                ffmpeg.output(i, file_name,
                             **{'c:v': 'libx264', 'b:v': video_bitrate, 'pass': 2, 'c:a': 'aac', 'b:a': audio_bitrate}
                             ).overwrite_output().run(quiet=True)
-                logger.error('ffmpeg stderr: %s', err.decode())
                 
             else:
-                _, err = ffmpeg.output(i, file_name,
+                ffmpeg.output(i, file_name,
                             **{'c:v': 'libx264', 'b:v': video_bitrate, 'c:a': 'aac', 'b:a': audio_bitrate}
                             ).overwrite_output().run(quiet=True)
-                logger.error('ffmpeg stderr: %s', err.decode())
 
             if os.path.getsize(file_name) <= size_upper_bound * 1024:
                 return Path(file_name)

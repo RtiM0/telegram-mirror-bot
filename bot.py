@@ -120,20 +120,18 @@ async def get_stream(links: list, title: str, reddit_post: str, automod_id, cont
                                     await send_video(context, output_path.open("rb"), title, reddit_post, automod_id)
                                     os.remove(output_path.resolve())
                                     return True
-                                else:
-                                    continue
-                            except Exception:
-                                logger.error(traceback.format_exc())
-                                continue
-                        try:
-                            await send_video(context, vid_head.url,title, reddit_post, automod_id)
-                            return True
-                        except BadRequest:
-                            try:
-                                await send_video(context, get(vid_head.url).content,title, reddit_post, automod_id)
-                                return True
                             except Exception:
                                 pass
+                        else:
+                            try:
+                                await send_video(context, vid_head.url,title, reddit_post, automod_id)
+                                return True
+                            except BadRequest:
+                                try:
+                                    await send_video(context, get(vid_head.url).content,title, reddit_post, automod_id)
+                                    return True
+                                except Exception:
+                                    pass
                 except Exception:
                     pass
         except Exception:
