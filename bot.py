@@ -20,7 +20,7 @@ from video import Video
 reddit = asyncpraw.Reddit('telegram mirror bot')
 
 REDDIT_COMMENT = Template('''
-[Mirror](https://soccer_mirror.t.me/$message_id/)
+[Mirror](https://xn--r1a.website/s/soccer_mirror/$message_id/)
 
 ^(Help Improve this bot! - [Source Code](https://github.com/RtiM0/telegram-mirror-bot))
 ''')
