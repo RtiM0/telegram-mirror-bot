@@ -17,10 +17,12 @@ from yt_dlp import YoutubeDL
 from logger import logger
 from video import Video
 
-reddit = asyncpraw.Reddit('telegram mirror bot')
+reddit = asyncpraw.Reddit('telegram mirror bot') 
 
 REDDIT_COMMENT = Template('''
-[Mirror](https://xn--r1a.website/s/soccer_mirror/$message_id/)
+[Mirror](https://tttttt.me/s/soccer_mirror/$message_id/)
+
+^(You DON'T need telegram to view these links, if you can't see a video in this link then replace tttttt[dot]me with t[dot]me in the link.)
 
 ^(Help Improve this bot! - [Source Code](https://github.com/RtiM0/telegram-mirror-bot))
 ''')
