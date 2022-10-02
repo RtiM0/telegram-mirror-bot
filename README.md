@@ -24,12 +24,12 @@ Processing the video link:
   git clone https://github.com/RtiM0/telegram-mirror-bot.git
   cd telegram-mirror-bot
   ```
-2. Create virtualenv
+2. [Install ffmpeg](https://ffmpeg.org/download.html)
+3. Create virtualenv
   ```bash
   python3 -m venv env
   source env/bin/activate
   ```
-3. [Install ffmpeg](https://ffmpeg.org/download.html)
 4. Install requirements
   ```bash
   pip install -r requirements.txt
@@ -46,6 +46,10 @@ Processing the video link:
   username=<Reddit Account Username>
   password=<Reddit Account Password>
   user_agent=tg mirror bot 0.1
+  ```
+7. Run the bot
+  ```bash
+  python bot.py
   ```
 ## Contributing
 The bot can be optimized further, especially with the video compression. If you have ways to improve upon the current algorithm, Pull requests are welcomed.
