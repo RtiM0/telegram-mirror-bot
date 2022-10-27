@@ -24,7 +24,7 @@ REDDIT_COMMENT = Template('''
 
 ^(You DON'T need telegram to view these links, if you can't see a video in this link then replace tttttt[dot]me with t[dot]me in the link.)
 
-^(Help Improve this bot! - [Source Code](https://github.com/RtiM0/telegram-mirror-bot))
+^(Help Improve this bot! - )^[Source](https://github.com/RtiM0/telegram-mirror-bot)
 ''')
 
 def get_reddit(permalink="/r/soccer/new?limit=20") -> dict:
